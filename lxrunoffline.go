@@ -7,6 +7,7 @@ import (
 
 const (
 	powershell           = "powershell.exe"
+	registryPath         = "Software\\Microsoft\\Windows\\CurrentVersion\\Lxss\\"
 	lxRunOfflinelibsPath = "libs\\LxRunOffline.exe"
 )
 
@@ -15,6 +16,16 @@ var (
 	args_listInstalled = []string{"list"}
 	args_Summary       = []string{"sm", "-n"}
 	args_GetDefault    = []string{"gd"}
+
+	registry_default_distro = "DefaultDistribution"
+	registry_distro_name    = "DistributionName"
+	registry_dir            = "BasePath"
+	registry_state          = "State"
+	registry_version        = "Version"
+	registry_env            = "DefaultEnvironment"
+	registry_uid            = "DefaultUid"
+	registry_kernel_cmd     = "KernelCommandLine"
+	registry_flags          = "Flags"
 )
 
 type Options struct {
@@ -72,14 +83,9 @@ func (lx *LxRunOffline) GetSummary(distributionName string) (string, *exec.Cmd, 
 	return string(output), cmd, err
 }
 
-func (lx *LxRunOffline) GetDefaultDistro() (string, *exec.Cmd, error) {
-	args := append(args_powershell, lx.libsPath)
-	startCommand := append(args, args_GetDefault...)
+func (lx *LxRunOffline) GetDefaultDistro() (string, error) {
+	distro_uid, _ := lx.GetRegistry("", registry_default_distro)
+	distro_name, _ := lx.GetRegistry(addPathPrefix(distro_uid), registry_distro_name)
 
-	cmd := exec.Command(powershell, startCommand...)
-	out, _ := cmd.Output()
-
-	output := lx.ClearASCII(out, true)
-
-	return output, cmd, nil
+	return distro_name, nil
 }

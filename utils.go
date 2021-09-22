@@ -33,3 +33,7 @@ func (lx *LxRunOffline) ClearASCII(values []byte, shouldGetFirstLine bool) strin
 
 	return output
 }
+
+func (lx *LxRunOffline) IsWSL2(flag uint64) bool {
+	return flag == uint64(wsl2_flags)
+}

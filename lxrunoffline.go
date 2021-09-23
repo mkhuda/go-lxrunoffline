@@ -63,10 +63,6 @@ func (lx *LxRunOffline) ListInstalled() ([]*Distro, error) {
 	}
 
 	for i := range distro_uids {
-		_, _, err := lx.GetRegistryValue(addPathPrefix(distro_uids[i]), registry_distro_name)
-		if err != nil {
-			return []*Distro{}, err
-		}
 		d, err := lx.GetDistroSummary(distro_uids[i])
 		if err != nil {
 			return []*Distro{}, err
@@ -77,16 +73,16 @@ func (lx *LxRunOffline) ListInstalled() ([]*Distro, error) {
 	return distros, nil
 }
 
-func (lx *LxRunOffline) GetDefaultDistro() (string, error) {
+func (lx *LxRunOffline) GetDefaultDistro() (string, string, error) {
 	distro_uid, _, err := lx.GetRegistryValue("", registry_default_distro)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	distro_name, _, err := lx.GetRegistryValue(addPathPrefix(distro_uid), registry_distro_name)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
-	return distro_name, nil
+	return distro_name, distro_uid, nil
 }

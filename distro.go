@@ -8,16 +8,16 @@ type Distro struct {
 	InstallationDirectory string
 }
 
-func (lx *LxRunOffline) GetDistroSummary(distro string) (*Distro, error) {
-	ds, _, err := lx.GetRegistryValue(addPathPrefix(distro), registry_distro_name)
+func (lx *LxRunOffline) GetDistroSummary(distro_uid string) (*Distro, error) {
+	ds, _, err := lx.GetRegistryValue(addPathPrefix(distro_uid), registry_distro_name)
 	if err != nil {
 		return &Distro{}, err
 	}
-	fi, _, err := lx.GetRegistryValueInt(addPathPrefix(distro), registry_version)
+	fi, _, err := lx.GetRegistryValueInt(addPathPrefix(distro_uid), registry_version)
 	if err != nil {
 		return &Distro{}, err
 	}
-	wv, _, err := lx.GetRegistryValueInt(addPathPrefix(distro), registry_flags)
+	wv, _, err := lx.GetRegistryValueInt(addPathPrefix(distro_uid), registry_flags)
 	if err != nil {
 		return &Distro{}, err
 	}
@@ -30,13 +30,13 @@ func (lx *LxRunOffline) GetDistroSummary(distro string) (*Distro, error) {
 		}
 	}()
 
-	dir, _, err := lx.GetRegistryValue(addPathPrefix(distro), registry_dir)
+	dir, _, err := lx.GetRegistryValue(addPathPrefix(distro_uid), registry_dir)
 	if err != nil {
 		return &Distro{}, err
 	}
 
 	d := &Distro{
-		DistroId:              distro,
+		DistroId:              distro_uid,
 		DistroName:            ds,
 		FileSystemVersion:     fi,
 		WslVersion:            wsl_version,

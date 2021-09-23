@@ -32,16 +32,30 @@ func main() {
 		return
 	}
 
-	defaultDistroName, _ := lx.GetDefaultDistro()
+	defaultDistroName, defaultDistroUid, _ := lx.GetDefaultDistro()
 
 	fmt.Println("List of installed WSL: ")
-	for i, distributionName := range listInstalled {
-		fmt.Println(i+1, distributionName.DistroName)
+	for i, distros := range listInstalled {
+		fmt.Println(i+1, distros.DistroName)
 	}
+
+	distroSummary, err := lx.GetDistroSummary(defaultDistroUid)
+	if err != nil {
+		fmt.Println("error summary", err)
+		return
+	}
+	
+	distroJson, err := json.Marshal(distroSummary)
+	if err != nil {
+		fmt.Println("error summary", err)
+		return
+	}
+
+	fmt.Printf("Summary of default distro (marshalled): %v\n", string(distroJson))
 
 	summaryOfDefaultDistro, cmd, err := lx.GetSummaryCmd(defaultDistroName)
 	if err != nil {
-		fmt.Println("error summary", err, cmd)
+		fmt.Println("error summary cmd", err, cmd)
 		return
 	}
 

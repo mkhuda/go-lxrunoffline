@@ -5,7 +5,6 @@ import (
 )
 
 func (lx *LxRunOffline) GetFirstLine(s string) string {
-
 	sOutput := strings.Split(s, "\n")
 	if len(sOutput) > 0 {
 		sOutput = sOutput[:len(sOutput)-1]

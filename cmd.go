@@ -35,9 +35,9 @@ func (lx *LxRunOffline) GetDefaultDistroCmd() (string, *exec.Cmd, error) {
 	start_command := append(args, args_get_default...)
 
 	cmd := exec.Command(powershell, start_command...)
-	out, _ := cmd.Output()
+	out, err := cmd.Output()
 
 	output := lx.ClearASCII(out, true)
 
-	return output, cmd, nil
+	return output, cmd, err
 }

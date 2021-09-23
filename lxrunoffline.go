@@ -36,15 +36,6 @@ type Options struct {
 	libsPath string
 }
 
-type Distro struct {
-	distroId              string
-	distroName            string
-	wslVersion            uint64
-	fileSystemVersion     uint64
-	installationDirectory string
-	configurationFlags    uint64
-}
-
 func Init(options Options) *LxRunOffline {
 	if options.libsPath == "" {
 		options.libsPath = lxRunOffline_libs_path
@@ -80,7 +71,11 @@ func (lx *LxRunOffline) ListInstalled() ([]Distro, error) {
 		if err != nil {
 			log.Println(err)
 		}
-		distros = append(distros, *lx.GetDistroSummary(distro_uids[i]))
+		d, err := lx.GetDistroSummary(distro_uids[i])
+		if err != nil {
+			log.Println(err)
+		}
+		distros = append(distros, *d)
 	}
 
 	return distros, nil
@@ -98,37 +93,4 @@ func (lx *LxRunOffline) GetDefaultDistro() (string, error) {
 	}
 
 	return distro_name, nil
-}
-
-func (lx *LxRunOffline) GetDistroSummary(distro string) *Distro {
-	ds, _, err := lx.GetRegistryValue(addPathPrefix(distro), registry_distro_name)
-	if err != nil {
-		log.Println("boo", err)
-	}
-	fi, _, err := lx.GetRegistryValueInt(addPathPrefix(distro), registry_version)
-	if err != nil {
-		log.Println("wa", err, registry_version)
-	}
-	wv, _, err := lx.GetRegistryValueInt(addPathPrefix(distro), registry_flags)
-
-	if err != nil {
-		log.Println("wa", err, registry_version)
-	}
-
-	wsl_version := func() uint64 {
-		if lx.IsWSL2(wv) {
-			return 2
-		} else {
-			return 1
-		}
-	}()
-
-	d := &Distro{
-		distroId:          distro,
-		distroName:        ds,
-		fileSystemVersion: fi,
-		wslVersion:        wsl_version,
-	}
-
-	return d
 }

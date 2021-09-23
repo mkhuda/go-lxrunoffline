@@ -19,7 +19,7 @@ func main() {
 
 	fmt.Println("List of installed WSL: ")
 	for i, distributionName := range listInstalled {
-		fmt.Println(i+1, distributionName)
+		fmt.Println(i+1, distributionName.DistroName)
 	}
 
 	summaryOfDefaultDistro, cmd, err := lx.GetSummaryCmd(defaultDistroName)

@@ -18,7 +18,7 @@ func WhereLx() (string, error) {
 }
 
 func (lx *LxRunOffline) ListInstalledCmd() ([]string, *exec.Cmd, error) {
-	args := append(args_powershell, lx.libsPath)
+	args := append(args_powershell, lx.LibsPath)
 	start_command := append(args, args_list_installed...)
 	cmd := exec.Command(powershell, start_command...)
 	out, err := cmd.Output()
@@ -32,7 +32,7 @@ func (lx *LxRunOffline) ListInstalledCmd() ([]string, *exec.Cmd, error) {
 }
 
 func (lx *LxRunOffline) GetSummaryCmd(distributionName string) (string, *exec.Cmd, error) {
-	args := append(args_powershell, lx.libsPath)
+	args := append(args_powershell, lx.LibsPath)
 	summary_args := append(args_summary, distributionName)
 	start_command := append(args, summary_args...)
 
@@ -43,7 +43,7 @@ func (lx *LxRunOffline) GetSummaryCmd(distributionName string) (string, *exec.Cm
 }
 
 func (lx *LxRunOffline) GetDefaultDistroCmd() (string, *exec.Cmd, error) {
-	args := append(args_powershell, lx.libsPath)
+	args := append(args_powershell, lx.LibsPath)
 	start_command := append(args, args_get_default...)
 
 	cmd := exec.Command(powershell, start_command...)

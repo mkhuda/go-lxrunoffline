@@ -32,13 +32,13 @@ type LxRunOffline struct {
 	Options
 }
 type Options struct {
-	libsPath string
+	LibsPath string
 }
 
 // Init(options) can be used to obtain custom location of lxrunoffline.exe
 func Init(options Options) *LxRunOffline {
-	if options.libsPath == "" {
-		options.libsPath = lxRunOffline_libs_path
+	if options.LibsPath == "" {
+		options.LibsPath = lxRunOffline_libs_path
 	}
 
 	lx := &LxRunOffline{
@@ -61,7 +61,7 @@ func New() (*LxRunOffline, error) {
 
 	lx := &LxRunOffline{
 		Options{
-			libsPath: lxLocation,
+			LibsPath: lxLocation,
 		},
 	}
 

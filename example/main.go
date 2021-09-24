@@ -13,6 +13,8 @@ func main() {
 		fmt.Println(err)
 	}
 
+	fmt.Printf("lx.Options.LibsPath: %v\n", lx.Options.LibsPath)
+
 	listInstalled, err := lx.ListInstalled()
 	if err != nil {
 		fmt.Println("error listinstalled", err)

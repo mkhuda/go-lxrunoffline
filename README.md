@@ -5,7 +5,7 @@
 > Still on going development
 
 ## Prerequisite
-This package uses lxrunoffline to process some task. The basic requirements are just to install lxrunoffline into your Windows 10 machine. You the installation [here](https://github.com/DDoSolitary/LxRunOffline#install)
+This package uses lxrunoffline to process some task. The basic requirements are just to install lxrunoffline into your Windows 10 machine. You can follow the installation [here](https://github.com/DDoSolitary/LxRunOffline#install). Recommended to install using `Choco` method.
 
 ## Installing
 

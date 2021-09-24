@@ -22,14 +22,19 @@ $ go get github.com/mkhuda/go-lxrunoffline
 package main
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 
 	"github.com/mkhuda/go-lxrunoffline"
 )
 
 func main() {
-	lx := lxrunoffline.New()
+	lx, err := lxrunoffline.New()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("lx.Options.LibsPath: %v\n", lx.Options.LibsPath)
 
 	listInstalled, err := lx.ListInstalled()
 	if err != nil {
@@ -49,7 +54,6 @@ func main() {
 		fmt.Println("error summary", err)
 		return
 	}
-	
 	distroJson, err := json.Marshal(distroSummary)
 	if err != nil {
 		fmt.Println("error summary", err)

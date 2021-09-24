@@ -4,7 +4,10 @@
 
 > Still on going development
 
-# Installing
+## Prerequisite
+This package uses lxrunoffline to process some task. The basic requirements are just to install lxrunoffline into your Windows 10 machine. You the installation [here](https://github.com/DDoSolitary/LxRunOffline#install)
+
+## Installing
 
 Install
 
@@ -12,13 +15,15 @@ Install
 $ go get github.com/mkhuda/go-lxrunoffline
 ```
 
-# Usage
+
+## Usage
 
 ```go
 package main
 
 import (
 	"fmt"
+	"encoding/json"
 
 	"github.com/mkhuda/go-lxrunoffline"
 )
@@ -65,7 +70,7 @@ func main() {
 
 ```
 
-# Credits
+## Credits
 
 - LxRunOffline Creator: [DDoSolitary](https://github.com/DDoSolitary/LxRunOffline/)
 - CMake: [CMake](https://cmake.org/)

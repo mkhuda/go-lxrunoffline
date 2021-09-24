@@ -5,13 +5,25 @@ import (
 	"strings"
 )
 
+func WhereLx() (string, error) {
+	cmd := exec.Command("where", lxRunOffline_libs_main)
+	out, err := cmd.Output()
+
+	lx_location := strings.Split(string(out), "\r")
+	if len(lx_location) > 0 {
+		lx_location = lx_location[:len(lx_location)-1]
+	}
+
+	return strings.TrimSuffix(lx_location[0], "\r"), err
+}
+
 func (lx *LxRunOffline) ListInstalledCmd() ([]string, *exec.Cmd, error) {
 	args := append(args_powershell, lx.libsPath)
 	start_command := append(args, args_list_installed...)
 	cmd := exec.Command(powershell, start_command...)
 	out, err := cmd.Output()
 
-	sOutput := strings.Split(string(out), "\n")
+	sOutput := strings.Split(string(out), "\r")
 	if len(sOutput) > 0 {
 		sOutput = sOutput[:len(sOutput)-1]
 	}

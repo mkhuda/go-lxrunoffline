@@ -1,8 +1,11 @@
 package lxrunoffline
 
+import "errors"
+
 const (
 	powershell             = "powershell.exe"
 	registry_path          = "Software\\Microsoft\\Windows\\CurrentVersion\\Lxss\\"
+	lxRunOffline_libs_main = "LxRunOffline.exe"
 	lxRunOffline_libs_path = "libs\\LxRunOffline.exe"
 )
 
@@ -32,6 +35,7 @@ type Options struct {
 	libsPath string
 }
 
+// Init(options) can be used to obtain custom location of lxrunoffline.exe
 func Init(options Options) *LxRunOffline {
 	if options.libsPath == "" {
 		options.libsPath = lxRunOffline_libs_path
@@ -44,14 +48,24 @@ func Init(options Options) *LxRunOffline {
 	return lx
 }
 
-func New() *LxRunOffline {
+// New() is to initialized and find where lxrunoffline.exe is installed to the machine.
+// Use this initialize method if you have installed lxrunoffline via Chocolatey or Scoop.
+// Also if you correctly install lxrunoffline.exe manually then added to Windows PATH
+func New() (*LxRunOffline, error) {
+
+	lxLocation, err := WhereLx()
+
+	if err != nil {
+		return nil, errors.New("no lxrunoffline installed")
+	}
+
 	lx := &LxRunOffline{
 		Options{
-			libsPath: lxRunOffline_libs_path,
+			libsPath: lxLocation,
 		},
 	}
 
-	return lx
+	return lx, nil
 }
 
 func (lx *LxRunOffline) ListInstalled() ([]*Distro, error) {

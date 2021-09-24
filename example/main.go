@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	lx := lxrunoffline.New()
+	lx, err := lxrunoffline.New()
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	listInstalled, err := lx.ListInstalled()
 	if err != nil {

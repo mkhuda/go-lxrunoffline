@@ -1,4 +1,4 @@
-package lxrunoffline
+package test
 
 import (
 	"fmt"

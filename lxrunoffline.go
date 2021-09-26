@@ -14,6 +14,15 @@ var (
 	args_list_installed = []string{"list"}
 	args_summary        = []string{"sm", "-n"}
 	args_get_default    = []string{"gd"}
+	args_install        = func(nameOfDistro string, dirToInstall string, tarFile string) []string {
+		return []string{"i", "-n", nameOfDistro, "-d", dirToInstall, "-f", tarFile}
+	}
+	args_export = func(nameOfDistro string, tarDirFile string) []string {
+		return []string{"e", "-n", nameOfDistro, "-f", tarDirFile}
+	}
+	args_duplicate = func(nameOfCurrentDistro string, dirToDuplicate string, newDistroName string) []string {
+		return []string{"d", "-n", nameOfCurrentDistro, "-d", dirToDuplicate, "-N", newDistroName}
+	}
 
 	registry_default_distro = "DefaultDistribution"
 	registry_distro_name    = "DistributionName"

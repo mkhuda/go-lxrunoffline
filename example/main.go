@@ -25,7 +25,8 @@ func main() {
 
 	fmt.Println("List of installed WSL: ")
 	for i, distros := range listInstalled {
-		fmt.Println(i+1, distros.DistroName)
+		size := distros.DirSize()
+		fmt.Println(i+1, distros.DistroName, size)
 	}
 
 	distroSummary, err := lx.GetDistroSummary(defaultDistroUid)

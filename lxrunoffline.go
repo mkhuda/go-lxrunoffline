@@ -57,9 +57,11 @@ func Init(options Options) *LxRunOffline {
 	return lx
 }
 
-// New() is to initialized and find where lxrunoffline.exe is installed to the machine.
-// Use this initialize method if you have installed lxrunoffline via Chocolatey or Scoop.
-// Also if you correctly install lxrunoffline.exe manually then added to Windows PATH
+/* New()
+Initialize and find where lxrunoffline.exe is installed to the machine.
+Use this initialize method if you have installed lxrunoffline via Chocolatey or Scoop.
+Also if you correctly install lxrunoffline.exe manually then added to Windows PATH
+*/
 func New() (*LxRunOffline, error) {
 
 	lxLocation, err := WhereLx()
@@ -77,6 +79,9 @@ func New() (*LxRunOffline, error) {
 	return lx, nil
 }
 
+/* lx.ListInstalled()
+Return list of distro with some infos. This function read Windows Registrys
+*/
 func (lx *LxRunOffline) ListInstalled() ([]*Distro, error) {
 	var distros []*Distro
 	distro_uids, err := lx.GetRegistrySubkey(registry_path, "")
@@ -96,6 +101,9 @@ func (lx *LxRunOffline) ListInstalled() ([]*Distro, error) {
 	return distros, nil
 }
 
+/* lx.GetDefaultDistro()
+Return distro name, distro_uid. Empty string will return if error occured. This function read Windows Registry
+*/
 func (lx *LxRunOffline) GetDefaultDistro() (string, string, error) {
 	distro_uid, _, err := lx.GetRegistryValue("", registry_default_distro)
 	if err != nil {
